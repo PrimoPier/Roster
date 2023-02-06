@@ -1,7 +1,7 @@
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
@@ -15,28 +15,23 @@ public class App {
         private int ageVal;
         private int weightVal;
 
-        // getters
+        public Player(String firstName, String lastName, int numberVal, int weightVal, int ageVal, String collegeName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.numberVal = numberVal;
+            this.weightVal = weightVal;
+            this.ageVal = ageVal;
+            this.collegeName = collegeName;
+        }
+        public String toString() {
+            return this.firstName;
+        }
         public String getFName() {
             return firstName;
         }
-        public String getLName() {
-            return lastName;
-        }
-        public String getCollege() {
-            return collegeName;
-        }
-        public int getNum() {
-            return numberVal;
-        }
-        public int getAge() {
-            return ageVal;
-        }
-        public int getWeight() {
-            return weightVal;
-        }
     }
 
-    public void bubbleSort(int arr[]) {
+    public static void bubbleSort(int[] arr) {
         // temporary storage value
         int temp;
         // sorting
@@ -55,7 +50,7 @@ public class App {
         }
     }
 
-    public void selectSort(String arr[]) {
+    public static void selectSort(String[] arr) {
         // sorting
         for(int i=0; i<arr.length-1; i++) {
             // find min element, put into string
@@ -85,26 +80,23 @@ public class App {
         String menuOpt;
         // create scanner object
         Scanner scanObj = new Scanner(System.in);
-
-        // create player object
-        Player playerObj = new Player();
         
-        // store strings
-        List<String> rosterStrings = new ArrayList<String>();
-        // load content of file
-        Scanner scanner = new Scanner(new FileReader("Roster.txt")).useDelimiter(",\\s*");
-        String scanString; // value to store string from file
+        try {
+            // open file
+            FileInputStream fileInput = new FileInputStream("Roster.txt");
+            Scanner scanner = new Scanner(fileInput);
+            
+            int j=0;
+            Player[] rosterArray = new Player[100];
 
-        // check end of file
-        while(scanner.hasNext()) {
-            scanString = scanner.next();
-            // add each string to arraylist
-            rosterStrings.add(scanString);
-        }
-
-        // convert arraylist to array
-        String[] rosterArray = rosterStrings.toArray(new String[100]); // creates new string array with size 100
-        System.out.println(playerObj.getFName()); // to test player variables
+            // returns true if there is another line to read
+            while(scanner.hasNextLine()) {
+                String[] scanString = scanner.nextLine().trim().split("\\s+");
+                // System.out.println(Arrays.toString(scanString)); // prints full roster to test values
+                rosterArray[j] = new Player(scanString[0], scanString[1], Integer.parseInt(scanString[2]), Integer.parseInt(scanString[5]), Integer.parseInt(scanString[6]), scanString[8]);
+                j++;
+            }
+            scanner.close();
 
         // user input menu
         boolean repeat;
@@ -115,30 +107,27 @@ public class App {
             repeat = false;
             switch (menuOpt) {
                 case "fname":
-                    // selectSort(rosterArray);
-                    scanObj.close();
+                    String[] rosterString = new String[100];
+                    for(int i=0; i<j; i++) {
+                        rosterString[i] = rosterArray[i].getFName();
+                    }
+                    selectSort(rosterString);
                     break;
                 case "lname":
                     // selectSort(rosterArray);
-                    scanObj.close();
                     break;
                 case "college":
                     // selectSort(rosterArray);
-                    scanObj.close();
                     break;
                 case "number":
                     // bubbleSort(rosterArray);
-                    scanObj.close();
                     break;
                 case "age":
                     // bubbleSort(rosterArray);
-                    scanObj.close();
                     break;
                 case "weight":
                     // bubbleSort(rosterArray);
-                    scanObj.close();
                     break;
-                case "X":
                 case "x":
                     System.out.println("TERMINATING...");
                     break;
@@ -147,5 +136,8 @@ public class App {
                 repeat = true;
             }
         } while (repeat); // repeats switch if repeat = true
+        } catch(IOException exception) {
+        exception.printStackTrace();
+        }
     }
 }
