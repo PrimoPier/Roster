@@ -1,7 +1,6 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
@@ -29,6 +28,21 @@ public class App {
         public String getFName() {
             return firstName;
         }
+        public String getLName() {
+            return lastName;
+        }
+        public String getCollege() {
+            return collegeName;
+        }
+        public int getNumber() {
+            return numberVal;
+        }
+        public int getAge() {
+            return ageVal;
+        }
+        public int getWeight() {
+            return weightVal;
+        }
     }
 
     public static void bubbleSort(int[] arr) {
@@ -46,7 +60,7 @@ public class App {
         }
         // print arr[]
         for (int i=0; i<arr.length; i++) {
-            System.out.print(arr[i]);
+            System.out.print(arr[i] + "\n");
         }
     }
 
@@ -58,7 +72,7 @@ public class App {
             String minStr = arr[i];
 
             for (int j=i+1; j<arr.length; j++) {
-                if (arr[j].compareTo(minStr) < 0) {
+                if (arr[j].compareTo(minStr) < 0) { // compare the two strings
                     minStr = arr[j];
                     min = j;
                 }
@@ -72,7 +86,7 @@ public class App {
         }
         // print arr[]
         for (int i=0; i<arr.length; i++) {
-            System.out.print(arr[i]);
+            System.out.print(arr[i] + "\n");
         }
     }
 
@@ -107,26 +121,46 @@ public class App {
             repeat = false;
             switch (menuOpt) {
                 case "fname":
-                    String[] rosterString = new String[100];
+                    String[] rosterFName = new String[j]; // create buffer array
                     for(int i=0; i<j; i++) {
-                        rosterString[i] = rosterArray[i].getFName();
+                        rosterFName[i] = rosterArray[i].getFName();
                     }
-                    selectSort(rosterString);
+                    selectSort(rosterFName);
                     break;
                 case "lname":
-                    // selectSort(rosterArray);
+                    String[] rosterLName = new String[j]; // create buffer array
+                    for(int i=0; i<j; i++) {
+                        rosterLName[i] = rosterArray[i].getLName();
+                    }
+                    selectSort(rosterLName);
                     break;
                 case "college":
-                    // selectSort(rosterArray);
+                    String[] rosterCollege = new String[j]; // create buffer array
+                    for(int i=0; i<j; i++) {
+                        rosterCollege[i] = rosterArray[i].getCollege();
+                    }
+                    selectSort(rosterCollege);
                     break;
                 case "number":
-                    // bubbleSort(rosterArray);
+                    int[] rosterNumber = new int[j]; // create buffer array
+                    for(int i=0; i<j; i++) {
+                        rosterNumber[i] = rosterArray[i].getNumber();
+                    }
+                    bubbleSort(rosterNumber);
                     break;
                 case "age":
-                    // bubbleSort(rosterArray);
+                    int[] rosterAge = new int[j]; // create buffer array
+                    for(int i=0; i<j; i++) {
+                        rosterAge[i] = rosterArray[i].getAge();
+                    }
+                    bubbleSort(rosterAge);
                     break;
                 case "weight":
-                    // bubbleSort(rosterArray);
+                    int[] rosterWeight = new int[j]; // create buffer array
+                    for(int i=0; i<j; i++) {
+                        rosterWeight[i] = rosterArray[i].getWeight();
+                    }
+                    bubbleSort(rosterWeight);
                     break;
                 case "x":
                     System.out.println("TERMINATING...");
